@@ -26,7 +26,8 @@
 ;; good-enough?: number number -> boolean
 ;; to determine if the  guess is good enough to be  the square root of
 ;; the radicand X.
-;; Examples: (good-enough? 20 100) should produce false
+;; Examples:
+;; (good-enough? 20 100) should produce false
 ;; (good-enough? 10 100) should produce true
 (define (good-enough? guess x)
   (< (abs (- (square guess) x)) 0.001))
