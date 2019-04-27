@@ -133,6 +133,11 @@
 (prime? 83)
 (prime? 22)
 
+
+;; expmod: number number number -> number
+;; to calculate the modular exponentiation over modulus M.
+;; Domain Knowledge: an algorithm for calculating the modular exponentiation.
+;; Examples: (expmod 5 3 13)  should produce 8
 (define (expmod base exp m)
   (cond ((= exp 0) 1)
         ((even? exp)
@@ -140,14 +145,33 @@
                     m))
         (else
          (remainder (* base (expmod base (- exp 1) m))
-                    m))))        
+                    m))))
+;; Tests:
+(expmod 5 3 13)
 
+
+;; fermat-test: number -> boolean
+;; to perform one fermat test for number N.
+;; Domain Knowledge: how to perform a fermat test.
+;; Examples:
+;; (fermat-test 7)  should produce true
+;; (fermat-test 8)  should produce false
 (define (fermat-test n)
   (define (try-it a)
     (= (expmod a n n) a))
   (try-it (+ 1 (random (- n 1)))))
+;; Tests:
+(fermat-test 8)
 
+;; fast-prime?: number number  -> boolean
+;; to test the primality of  N by performing a fermat test TIMES number of times.
+;; Examples:   
+;; (fast-prime? 7 10)  should produce true
+;; (fast-prime? 8 10)  should produce false
 (define (fast-prime? n times)
   (cond ((= times 0) #t)
         ((fermat-test n) (fast-prime? n (- times 1)))
-                 (else #f)))
+        (else #f)))
+;; Tests:
+(fast-prime? 7 10)  
+(fast-prime? 8 10)
